@@ -27,8 +27,8 @@
   --r-row: 8px;
   --r-ctl: 6px;
 
-  --sans: "Atkinson Hyperlegible Next", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --mono: "Atkinson Hyperlegible Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --sans: var(--font-sans), "Atkinson Hyperlegible Next", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: var(--font-mono), "Atkinson Hyperlegible Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* scale: 12 / 13 / 15 / 18 / 28 */
   --t-xs: 12px;
