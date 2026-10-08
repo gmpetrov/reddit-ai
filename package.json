@@ -4,13 +4,16 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node --env-file=.env src/server.js",
-    "dev": "node --env-file=.env --watch src/server.js"
+    "dev": "node --env-file=.env server.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node --env-file=.env server.js"
   },
   "dependencies": {
-    "express": "^5.2.1",
+    "next": "^16.4.0",
     "openai": "^7.30.0",
     "playwright-core": "^1.64.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
     "ws": "^8.22.0"
   }
 }

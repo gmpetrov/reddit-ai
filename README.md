@@ -5,8 +5,18 @@ Local web app to log in to sites in a Scrapfly cloud browser, reuse those logins
 ```bash
 npm install
 cp .env.example .env   # fill in keys; APP_SECRET: openssl rand -hex 32
-npm start              # http://127.0.0.1:3000
+npm run dev            # http://127.0.0.1:3000 (Next.js dev mode, hot reload)
+
+# production
+npm run build && npm start
 ```
+
+## Project layout
+A Next.js (App Router) app run by a small custom server:
+- `server.js`: starts Next, owns the long-lived state (store, Scrapfly browsers, agent runs), serves the live-view websocket at `/ws/live/:profileId`, and rejects cross-origin requests. Use `npm run dev` / `npm start`; plain `next dev` won't work.
+- `app/api/**/route.js`: the REST API and the `/api/events` SSE stream. Route handlers reach the shared state through `lib/runtime.js`, never by importing `lib/store.js` etc. directly (Next would bundle a second copy).
+- `app/page.jsx` + `components/`: the React UI.
+- `lib/`: agent loop, Scrapfly browser manager, encrypted JSON store, usage/cost tracking.
 
 ## How it works
 - **Profiles**: "Open & log in" starts a Scrapfly Cloud Browser (CDP over `wss://browser.scrapfly.io`) and shows it live in the app. Log in yourself (paste/"Send text" for passwords, solve 2FA/CAPTCHA), then **Save & close**. Cookies + localStorage are snapshotted (AES-256-GCM encrypted in `data/db.json`) and restored into every new browser for that profile. State is also auto-saved every 60s.
